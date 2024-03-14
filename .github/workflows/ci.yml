@@ -9,23 +9,10 @@ jobs:
     - name: Clone main repository
       uses: actions/checkout@v2
 
-    - name: Clone nuget dependencies repository
-      uses: actions/checkout@v2
-      with:
-        # this repository contains the following `.nupkg` files:
-        #   - BCMakeCert.2.0.9.nupkg
-        #   - FiddlerCore.Trial.5.0.0.nupkg
-        #   - Telerik.NetworkConnections.0.2.0.nupkg
-        repository: FailedShack/usbhelperlauncher-deps
-        path: usbhelperlauncher-deps
-        ssh-key: ${{ secrets.usbhelperlauncher_deps_deploy_key }}
-
     - name: Set up MSBuild
       uses: microsoft/setup-msbuild@v1
     - name: Set up NuGet
       uses: nuget/setup-nuget@v1
-    - name: Add local NuGet repository
-      run: nuget sources add -name local -source "$(pwd)\usbhelperlauncher-deps"
     - name: Install dependencies
       run: nuget restore USBHelperLauncher.sln
 
